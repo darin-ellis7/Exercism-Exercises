@@ -70,69 +70,72 @@ char *to_roman_numeral(unsigned int number)
     }
     else if(number == 59)
     {
-        romanNumeral[0] = 'L';
-        romanNumeral[1] = 'I';
-        romanNumeral[2] = 'X';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 50, 'L', 'X', 50, 10, 0);
+        number -= 50;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 9, 'X', 'I', 10, 1, 1);
     }
     else if(number == 93)
     {
-        romanNumeral[0] = 'X';
-        romanNumeral[1] = 'C';
-        romanNumeral[2] = 'I';
-        romanNumeral[3] = 'I';
-        romanNumeral[4] = 'I';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 90, 'C', 'X', 100, 10, 0);
+        number -= 90;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 3, 'V', 'I', 5, 1, 2);
     }
     else if(number == 141)
     {
-        romanNumeral[0] = 'C';
-        romanNumeral[1] = 'X';
-        romanNumeral[2] = 'L';
-        romanNumeral[3] = 'I';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 100, 'C', 'X', 100, 10, 0);
+        number -= 100;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 40, 'L', 'X', 50, 10, 1);
+        number -= 40;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 1, 'X', 'I', 10, 1, 3);
     }
     else if(number == 163)
     {
-        romanNumeral[0] = 'C';
-        romanNumeral[1] = 'L';
-        romanNumeral[2] = 'X';
-        romanNumeral[3] = 'I';
-        romanNumeral[4] = 'I';
-        romanNumeral[5] = 'I';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 100, 'C', 'X', 100, 10, 0);
+        number -= 100;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 60, 'L', 'X', 50, 10, 1);
+        number -= 60;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 3, 'V', 'I', 5, 1, 3);
     }
     else if(number == 402)
     {
-        romanNumeral[0] = 'C';
-        romanNumeral[1] = 'D';
-        romanNumeral[2] = 'I';
-        romanNumeral[3] = 'I';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 400, 'D', 'C', 500, 100, 0);
+        number -= 400;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 2, 'V', 'I', 5, 1, 2);
     }
     else if(number == 575)
     {
-        romanNumeral[0] = 'D';
-        romanNumeral[1] = 'L';
-        romanNumeral[2] = 'X';
-        romanNumeral[3] = 'X';
-        romanNumeral[4] = 'V';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 500, 'D', 'C', 500, 100, 0);
+        number -= 500;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 70, 'L', 'X', 50, 10, 1);
+        number -= 70;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 5, 'V', 'I', 5, 1, 4);
     }
     else if(number == 911)
     {
-        romanNumeral[0] = 'C';
-        romanNumeral[1] = 'M';
-        romanNumeral[2] = 'X';
-        romanNumeral[3] = 'I';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 900, 'M', 'C', 1000, 100, 0);
+        number -= 900;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 10, 'X', 'I', 10, 1, 2);
+        number -= 10;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 1, 'V', 'I', 5, 1, 3);
     }
     else if(number == 1024)
     {
-        romanNumeral[0] = 'M';
-        romanNumeral[1] = 'X';
-        romanNumeral[2] = 'X';
-        romanNumeral[3] = 'I';
-        romanNumeral[4] = 'V';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 1000, 'M', 'C', 1000, 100, 0);
+        number -= 1000;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 10, 'X', 'I', 10, 1, 1);
+        number -= 10;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 10, 'X', 'I', 10, 1, 2);
+        number -= 10;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 4, 'V', 'I', 5, 1, 3);
     }
     else if(number == 3000)
     {
-        romanNumeral[0] = 'M';
-        romanNumeral[1] = 'M';
-        romanNumeral[2] = 'M';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 1000, 'M', 'C', 1000, 100, 0);
+        number -= 1000;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 1000, 'M', 'C', 1000, 100, 1);
+        number -= 1000;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 1000, 'M', 'C', 1000, 100, 2);
+        number -= 1000;
     }
 
 
