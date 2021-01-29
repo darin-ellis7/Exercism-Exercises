@@ -1,7 +1,10 @@
 #include "roman_numerals.h"
 #include <stdlib.h>
 
-char *arabic_digit_to_roman_digits(char *romanNumber, unsigned int arabicNumber)
+
+
+
+char *arabic_digit_to_roman_digits(char *romanNumber, unsigned int arabicNumber, char greaterRomanDigit, char lesserRomanDigit)
 {
     unsigned int difference;
 
@@ -11,22 +14,22 @@ char *arabic_digit_to_roman_digits(char *romanNumber, unsigned int arabicNumber)
         difference = 4 - arabicNumber;
         for (unsigned int i = 0; i < 4-difference; i++)
         {
-            romanNumber[i] = 'I';
+            romanNumber[i] = lesserRomanDigit;
         }
     }
     //one below five
     else if(4 == arabicNumber)
     {
-        romanNumber[0] = 'I';
-        romanNumber[1] = 'V';
+        romanNumber[0] = lesserRomanDigit;
+        romanNumber[1] = greaterRomanDigit;
     }
     //even with five and up to three above it
     else if(4 < arabicNumber && 9 > arabicNumber)
     {
-        romanNumber[0] = 'V';
+        romanNumber[0] = greaterRomanDigit;
         for(unsigned int i = 0; i < arabicNumber - 5; i++)
          {
-             romanNumber[i+1] = 'I';
+             romanNumber[i+1] = lesserRomanDigit;
          }
     }
     return romanNumber;
@@ -34,39 +37,15 @@ char *arabic_digit_to_roman_digits(char *romanNumber, unsigned int arabicNumber)
 
 char *to_roman_numeral(unsigned int number)
 {
-    //Roman digit key:
-    // I = 1
-    // V = 5
-    // X = 10
-    // L = 50
-    // C = 100
-    // D = 500
-    // M = 1000
+    // struct numeralmap numerals = { 
+    //     {'I', 'V', 'X', 'L', 'C', 'D', 'M'},
+    //     { 1, 5, 10, 50, 100, 500, 1000}
+    // }; 
 
     char *romanNumeral = calloc(15, sizeof(char));
     
-    romanNumeral = arabic_digit_to_roman_digits(romanNumeral, number);
+    romanNumeral = arabic_digit_to_roman_digits(romanNumeral, number, 'V', 'I');
 
-    // if(number <= 3)
-    // {
-    //     for(unsigned int i = 0; i < number; i++)
-    //     {
-    //         romanNumeral[i] = 'I';
-    //     }
-    // }
-    // else if(number == 4)
-    // {
-    //     romanNumeral[0] = 'I';
-    //     romanNumeral[1] = 'V';
-    // }
-    // else if(number >= 5 && number <= 8)
-    // {
-    //     romanNumeral[0] = 'V';
-    //     for(unsigned int i = 0; i < number - 5; i++)
-    //     {
-    //         romanNumeral[i+1] = 'I';
-    //     }
-    // }
     if(number == 9)
     {
         romanNumeral[0] = 'I';
