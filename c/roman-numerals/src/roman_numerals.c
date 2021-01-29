@@ -1,35 +1,30 @@
 #include "roman_numerals.h"
 #include <stdlib.h>
 
-
-
-
-char *arabic_digit_to_roman_digits(char *romanNumber, unsigned int arabicNumber, char greaterRomanDigit, char lesserRomanDigit)
+char *arabic_digit_to_roman_digits(char *romanNumber, unsigned int arabicNumber, char greaterRomanDigit, char lesserRomanDigit, unsigned int greaterArabicDigit, unsigned int lesserArabicDigit, unsigned int startingIndexOfRomanNumber)
 {
-    unsigned int difference;
-
-    //first three
-    if(4 > arabicNumber)
+    lesserArabicDigit = lesserArabicDigit-1;
+    //first three lesserRomanDigit
+    if(greaterArabicDigit-1 > arabicNumber)
     {
-        difference = 4 - arabicNumber;
-        for (unsigned int i = 0; i < 4-difference; i++)
+        for (unsigned int i = 0; i < arabicNumber; i++)
         {
-            romanNumber[i] = lesserRomanDigit;
+            romanNumber[startingIndexOfRomanNumber+i] = lesserRomanDigit;
         }
     }
-    //one below five
-    else if(4 == arabicNumber)
+    //one below greaterRomanDigit
+    else if(greaterArabicDigit-1 == arabicNumber)
     {
-        romanNumber[0] = lesserRomanDigit;
-        romanNumber[1] = greaterRomanDigit;
+        romanNumber[startingIndexOfRomanNumber] = lesserRomanDigit;
+        romanNumber[startingIndexOfRomanNumber+1] = greaterRomanDigit;
     }
-    //even with five and up to three above it
-    else if(4 < arabicNumber && 9 > arabicNumber)
+    //even with greaterRomanDigit and up to three above it
+    else if(greaterArabicDigit-1 < arabicNumber && (greaterArabicDigit*2)-1 > arabicNumber)
     {
-        romanNumber[0] = greaterRomanDigit;
-        for(unsigned int i = 0; i < arabicNumber - 5; i++)
+        romanNumber[startingIndexOfRomanNumber] = greaterRomanDigit;
+        for(unsigned int i = 0; i < arabicNumber - greaterArabicDigit; i++)
          {
-             romanNumber[i+1] = lesserRomanDigit;
+             romanNumber[startingIndexOfRomanNumber+i+1] = lesserRomanDigit;
          }
     }
     return romanNumber;
@@ -44,20 +39,23 @@ char *to_roman_numeral(unsigned int number)
 
     char *romanNumeral = calloc(15, sizeof(char));
     
-    romanNumeral = arabic_digit_to_roman_digits(romanNumeral, number, 'V', 'I');
-
-    if(number == 9)
+    //Handles tests 1-6
+    if(number < 9)
     {
-        romanNumeral[0] = 'I';
-        romanNumeral[1] = 'X';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, number, 'V', 'I', 5, 1, 0);
+    }
+    else if(number == 9)
+    {
+        //Handles test 9
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, number, 'X', 'I', 10, 1, 0);
     }
     else if(number == 27)
     {
-        romanNumeral[0] = 'X';
-        romanNumeral[1] = 'X';
-        romanNumeral[2] = 'V';
-        romanNumeral[3] = 'I';
-        romanNumeral[4] = 'I';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 10, 'X', 'I', 10, 1, 0);
+        number -= 10;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 10, 'X', 'I', 10, 1, 1);
+        number -= 10;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 7, 'V', 'I', 5, 1, 2);
     }
     else if(number == 48)
     {
