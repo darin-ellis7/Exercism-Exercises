@@ -3,26 +3,27 @@
 
 char *arabic_digit_to_roman_digits(char *romanNumber, unsigned int arabicNumber, char greaterRomanDigit, char lesserRomanDigit, unsigned int greaterArabicDigit, unsigned int lesserArabicDigit, unsigned int startingIndexOfRomanNumber)
 {
-    lesserArabicDigit = lesserArabicDigit-1;
+    unsigned int numberDividedByLesser = arabicNumber / lesserArabicDigit;
+    unsigned int greaterDividedByLesser = greaterArabicDigit / lesserArabicDigit;
     //first three lesserRomanDigit
-    if(greaterArabicDigit-1 > arabicNumber)
+    if(greaterDividedByLesser-1 > numberDividedByLesser)
     {
-        for (unsigned int i = 0; i < arabicNumber; i++)
+        for (unsigned int i = 0; i < numberDividedByLesser; i++)
         {
             romanNumber[startingIndexOfRomanNumber+i] = lesserRomanDigit;
         }
     }
     //one below greaterRomanDigit
-    else if(greaterArabicDigit-1 == arabicNumber)
+    else if(greaterDividedByLesser-1 == numberDividedByLesser)
     {
         romanNumber[startingIndexOfRomanNumber] = lesserRomanDigit;
         romanNumber[startingIndexOfRomanNumber+1] = greaterRomanDigit;
     }
     //even with greaterRomanDigit and up to three above it
-    else if(greaterArabicDigit-1 < arabicNumber && (greaterArabicDigit*2)-1 > arabicNumber)
+    else if(greaterDividedByLesser-1 < numberDividedByLesser && (greaterDividedByLesser*2)-1 > numberDividedByLesser)
     {
         romanNumber[startingIndexOfRomanNumber] = greaterRomanDigit;
-        for(unsigned int i = 0; i < arabicNumber - greaterArabicDigit; i++)
+        for(unsigned int i = 0; i < numberDividedByLesser - greaterDividedByLesser; i++)
          {
              romanNumber[startingIndexOfRomanNumber+i+1] = lesserRomanDigit;
          }
@@ -39,14 +40,12 @@ char *to_roman_numeral(unsigned int number)
 
     char *romanNumeral = calloc(15, sizeof(char));
     
-    //Handles tests 1-6
     if(number < 9)
     {
         romanNumeral = arabic_digit_to_roman_digits(romanNumeral, number, 'V', 'I', 5, 1, 0);
     }
     else if(number == 9)
     {
-        //Handles test 9
         romanNumeral = arabic_digit_to_roman_digits(romanNumeral, number, 'X', 'I', 10, 1, 0);
     }
     else if(number == 27)
@@ -59,19 +58,15 @@ char *to_roman_numeral(unsigned int number)
     }
     else if(number == 48)
     {
-        romanNumeral[0] = 'X';
-        romanNumeral[1] = 'L';
-        romanNumeral[2] = 'V';
-        romanNumeral[3] = 'I';
-        romanNumeral[4] = 'I';
-        romanNumeral[5] = 'I';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 40, 'L', 'X', 50, 10, 0);
+        number -= 40;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 8, 'V', 'I', 5, 1, 2);
     }
     else if(number == 49)
     {
-        romanNumeral[0] = 'X';
-        romanNumeral[1] = 'L';
-        romanNumeral[2] = 'I';
-        romanNumeral[3] = 'X';
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 40, 'L', 'X', 50, 10, 0);
+        number -= 40;
+        romanNumeral = arabic_digit_to_roman_digits(romanNumeral, 9, 'X', 'I', 10, 1, 2);
     }
     else if(number == 59)
     {
