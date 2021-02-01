@@ -17,54 +17,56 @@ void arabic_digit_to_roman_digits(
 
     unsigned int indexOfRomanNumber = startingIndexOfRomanNumber;
 
+    unsigned int greaterDigitIndex = numeralsIndex+2; //M
+
+    unsigned int middleDigitIndex = numeralsIndex+1; //D
+
+    unsigned int lesserDigitIndex = numeralsIndex; //C
+
     unsigned int quotient = arabicNumber / numerals.arabic[numeralsIndex];
+
     if(quotient > 0 && quotient < 4)
     {
         for (unsigned int i = 0; i < quotient; i++)
         {
-            romanNumber[indexOfRomanNumber] = numerals.roman[numeralsIndex];
+            romanNumber[indexOfRomanNumber] = numerals.roman[lesserDigitIndex];
             indexOfRomanNumber += 1;
         }
     }
     else if(4 == quotient)
     {
-        romanNumber[indexOfRomanNumber] = numerals.roman[numeralsIndex];
+        romanNumber[indexOfRomanNumber] = numerals.roman[lesserDigitIndex];
         indexOfRomanNumber += 1;
-        romanNumber[indexOfRomanNumber] = numerals.roman[numeralsIndex+1];
+        romanNumber[indexOfRomanNumber] = numerals.roman[middleDigitIndex];
         indexOfRomanNumber += 1;
     }
-    // else if(quotient > 4)
-    // {
-    //     romanNumber[indexOfRomanNumber] = numerals.roman[numeralsIndex];
-    //     indexOfRomanNumber += 1;
-    //     for (unsigned int i = 0; i < quotient; i++)
-    //     {
-    //          romanNumber[indexOfRomanNumber] = numerals.roman[numeralsIndex-1];
-    //          indexOfRomanNumber += 1;
-    //     }
-    // }
-
-    unsigned int remainder = arabicNumber % numerals.arabic[numeralsIndex];
-    if(numeralsIndex >= 2)
+    else if((5 <= quotient) && (9 > quotient))
     {
-        if((remainder / 9) == numerals.arabic[numeralsIndex-2])
+        romanNumber[indexOfRomanNumber] = numerals.roman[middleDigitIndex];
+        indexOfRomanNumber += 1;
+        for (unsigned int i = 5; i < quotient; i++)
         {
-            romanNumber[indexOfRomanNumber] = numerals.roman[numeralsIndex-2];
+            romanNumber[indexOfRomanNumber] = numerals.roman[lesserDigitIndex];
             indexOfRomanNumber += 1;
-            romanNumber[indexOfRomanNumber] = numerals.roman[numeralsIndex];
-            indexOfRomanNumber += 1;
-            numeralsIndex -= 1;
         }
     }
-
-    if(remainder > 0)
-    {  
-            arabic_digit_to_roman_digits(romanNumber, remainder, indexOfRomanNumber, numeralsIndex-1);
+    else if(9 == quotient)
+    {
+        romanNumber[indexOfRomanNumber] = numerals.roman[lesserDigitIndex];
+        indexOfRomanNumber += 1;
+        romanNumber[indexOfRomanNumber] = numerals.roman[greaterDigitIndex];
+        indexOfRomanNumber += 1;
     }
-    // else if(remainder > 0)
-    // {
-    //     arabic_digit_to_roman_digits(romanNumber, remainder, indexOfRomanNumber, numeralsIndex-1);
-    // }
+    
+    if(numeralsIndex > 1) //don't go past the bounds of the numerals array
+    {
+        unsigned int remainder = arabicNumber % numerals.arabic[numeralsIndex];
+        if(remainder > 0)
+        {  
+            arabic_digit_to_roman_digits(romanNumber, remainder, indexOfRomanNumber, numeralsIndex-2);
+        }
+    }
+    
 }
 
 char *to_roman_numeral(unsigned int number)
